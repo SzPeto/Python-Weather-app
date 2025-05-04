@@ -1,3 +1,4 @@
+import datetime
 import os.path
 import sys
 
@@ -31,6 +32,7 @@ class AppWindow(QMainWindow):
         self.h_box_main = QHBoxLayout()
         self.v_box_left = QVBoxLayout()
         self.v_box_right = QVBoxLayout()
+        self.h_box_wind = QHBoxLayout()
 
         # Labels, buttons, line edit and other
         self.text_field = QLineEdit()
@@ -42,14 +44,17 @@ class AppWindow(QMainWindow):
         self.humidity_label = QLabel()
         self.pressure_label = QLabel()
         self.wind_label = QLabel()
+        self.wind_direction_label = QLabel()
+        self.date_time_label = QLabel()
         self.separator = QFrame()
         self.temp_unit = "c"
         self.temp_sign = "°C"
         self.temperature = 0
         self.humidity = 0
         self.wind_speed = 0
-        self.wind_direction = "N"
+        self.wind_direction = "⬆️"
         self.pressure = 0
+        self.dt = 0
 
 
         # Files
@@ -79,14 +84,17 @@ class AppWindow(QMainWindow):
         self.separator.setFrameShape(QFrame.VLine)
         self.separator.setFrameShadow(QFrame.Sunken)
         self.separator.setLineWidth(2)
+        self.h_box_wind.addWidget(self.wind_label, alignment = Qt.AlignRight)
+        self.h_box_wind.addWidget(self.wind_direction_label, alignment = Qt.AlignHCenter)
         self.v_box_left.addWidget(self.text_field, alignment = Qt.AlignHCenter)
         self.v_box_left.addWidget(self.submit_button, alignment = Qt.AlignTop | Qt.AlignHCenter)
+        self.v_box_left.addWidget(self.date_time_label, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.city_label, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.emoji_label, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.temperature_label, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.humidity_label, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.pressure_label, alignment = Qt.AlignHCenter)
-        self.v_box_right.addWidget(self.wind_label, alignment = Qt.AlignHCenter)
+        self.v_box_right.addLayout(self.h_box_wind)
         self.v_box_right.addWidget(self.description_label, alignment = Qt.AlignHCenter)
         self.h_box_main.addLayout(self.v_box_left)
         self.h_box_main.addWidget(self.separator)
@@ -104,17 +112,20 @@ class AppWindow(QMainWindow):
         self.description_label.setObjectName("descriptionLabel")
         self.emoji_label.setText("☀️")
         self.emoji_label.setObjectName("emojiLabel")
-        self.temperature_label.setText("24°C")
+        self.temperature_label.setText("🌡️0°C")
         self.temperature_label.setObjectName("temperatureLabel")
-        self.city_label.setText("Hrhov, SK")
+        self.city_label.setText("")
         self.city_label.setObjectName("cityLabel")
         self.submit_button.clicked.connect(self.get_weather)
-        self.humidity_label.setText("💧60%")
+        self.humidity_label.setText("💧0%")
         self.humidity_label.setObjectName("humidityLabel")
-        self.pressure_label.setText("Pressure : 1004hPa")
+        self.pressure_label.setText("Pressure : 0hPa")
         self.pressure_label.setObjectName("pressureLabel")
-        self.wind_label.setText("30km/h N")
+        self.wind_label.setText("Wind : 0km/h")
         self.wind_label.setObjectName("windLabel")
+        self.wind_direction_label.setText("⬆️")
+        self.wind_direction_label.setObjectName("windDirectionLabel")
+        self.date_time_label.setObjectName("dateTimeLabel")
 
         # Styling
         self.setStyleSheet("""
@@ -178,6 +189,17 @@ class AppWindow(QMainWindow):
             QLabel#windLabel{
                 font-family: Bahnschrift;
                 font-size: 35px;
+                margin: 10px;
+            }
+            
+            QLabel#windDirectionLabel{
+                font-family: Segoe UI Emoji;
+                font-size: 45px;
+            }
+            
+            QLabel#dateTimeLabel{
+                font-family: Bahnschrift;
+                font-size: 20px;
             }
         """)
 
@@ -217,14 +239,52 @@ class AppWindow(QMainWindow):
 
 
     def format_data(self, data):
-        if self.temp_unit == "c":
-            self.temp_sign = "°C"
 
-        elif self.temp_unit == "f":
-            self.temp_sign = "°F"
+        # Getting the temperature
+        self.temp_sign = "°C"
+        self.temperature = float(data.get("main").get("temp")) - 273.15
 
+
+        # Getting the humidity
+        self.humidity = int(data.get("main").get("humidity"))
+
+        # Getting the pressure
+        self.pressure = int(data.get("main").get("pressure"))
+
+        # Getting the wind
+        self.wind_speed = int(float(data.get("wind").get("speed")) * 3.6)
+        self.set_wind_direction(data)
+
+        # Getting the date and time
+        self.dt = int(data.get("dt"))
+        local_time = datetime.datetime.fromtimestamp(self.dt)
+
+        # Formatting the data
         self.city_label.setText(f"{data.get("name")}")
-        self.temperature_label.setText(f"🌡️ {self.temperature}{self.temp_sign}")
+        self.temperature_label.setText(f"🌡️{self.temperature:.1f}{self.temp_sign}")
         self.pressure_label.setText(f"Pressure : {self.pressure}hPa")
         self.humidity_label.setText(f"💧{self.humidity}%")
-        self.wind_label.setText(f"Wind : {self.wind_speed}km/h {self.wind_direction}")
+        self.wind_label.setText(f"Wind : {self.wind_speed}km/h")
+        self.wind_direction_label.setText(self.wind_direction)
+        self.date_time_label.setText(local_time.strftime("%d.%m.%Y %H:%M:%S"))
+
+    def set_wind_direction(self, data):
+        wind_degree = int(data.get("wind").get("deg"))
+        if 0 <= wind_degree <= 22:
+            self.wind_direction = "⬆️"
+        elif 23 <= wind_degree <= 67:
+            self.wind_direction = "↗️"
+        elif 68 <= wind_degree <= 112:
+            self.wind_direction = "➡️"
+        elif 113 <= wind_degree <= 157:
+            self.wind_direction = "↘️"
+        elif 158 <= wind_degree <= 202:
+            self.wind_direction = "⬇️"
+        elif 203 <= wind_degree <= 247:
+            self.wind_direction = "↙️"
+        elif 248 <= wind_degree <= 292:
+            self.wind_direction = "⬅️"
+        elif 293 <= wind_degree <= 337:
+            self.wind_direction = "↖️"
+        elif 338 <= wind_degree <= 360:
+            self.wind_direction = "⬆️"
