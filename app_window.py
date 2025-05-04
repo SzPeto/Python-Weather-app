@@ -1,6 +1,7 @@
 import os.path
 import sys
 
+import requests
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtWidgets import QApplication, QAction, QMenuBar, QMenu, QPushButton, QLabel, QFrame
@@ -9,10 +10,8 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QLineEdit, QVBoxLayout, QHBoxL
 
 class AppWindow(QMainWindow):
 
-    def __init__(self, app):
+    def __init__(self):
         super().__init__()
-        app: QApplication
-        self.app = app
         self.central_widget = QWidget()
 
         # Menu
@@ -32,17 +31,26 @@ class AppWindow(QMainWindow):
         self.h_box_main = QHBoxLayout()
         self.v_box_left = QVBoxLayout()
         self.v_box_right = QVBoxLayout()
-        self.separator = QFrame()
 
-        # Line edit
+        # Labels, buttons, line edit and other
         self.text_field = QLineEdit()
-
-        # Buttons
         self.submit_button = QPushButton("Submit")
-
-        # Labels
         self.description_label = QLabel()
+        self.temperature_label = QLabel()
         self.emoji_label = QLabel()
+        self.city_label = QLabel()
+        self.humidity_label = QLabel()
+        self.pressure_label = QLabel()
+        self.wind_label = QLabel()
+        self.separator = QFrame()
+        self.temp_unit = "c"
+        self.temp_sign = "°C"
+        self.temperature = 0
+        self.humidity = 0
+        self.wind_speed = 0
+        self.wind_direction = "N"
+        self.pressure = 0
+
 
         # Files
         self.help_file_path = "Help.txt"
@@ -68,13 +76,17 @@ class AppWindow(QMainWindow):
 
         # Layout
         self.central_widget.setLayout(self.h_box_main)
-
         self.separator.setFrameShape(QFrame.VLine)
         self.separator.setFrameShadow(QFrame.Sunken)
         self.separator.setLineWidth(2)
         self.v_box_left.addWidget(self.text_field, alignment = Qt.AlignHCenter)
         self.v_box_left.addWidget(self.submit_button, alignment = Qt.AlignTop | Qt.AlignHCenter)
+        self.v_box_right.addWidget(self.city_label, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.emoji_label, alignment = Qt.AlignHCenter)
+        self.v_box_right.addWidget(self.temperature_label, alignment = Qt.AlignHCenter)
+        self.v_box_right.addWidget(self.humidity_label, alignment = Qt.AlignHCenter)
+        self.v_box_right.addWidget(self.pressure_label, alignment = Qt.AlignHCenter)
+        self.v_box_right.addWidget(self.wind_label, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.description_label, alignment = Qt.AlignHCenter)
         self.h_box_main.addLayout(self.v_box_left)
         self.h_box_main.addWidget(self.separator)
@@ -83,7 +95,7 @@ class AppWindow(QMainWindow):
         # Dimensions and geometry
         self.center_window()
 
-        # Other
+        # Labels, buttons, line edit
         self.setWindowTitle("Weather app by Peter Szepesi")
         self.text_field.setPlaceholderText("Enter a city name")
         self.text_field.setObjectName("textField")
@@ -92,6 +104,17 @@ class AppWindow(QMainWindow):
         self.description_label.setObjectName("descriptionLabel")
         self.emoji_label.setText("☀️")
         self.emoji_label.setObjectName("emojiLabel")
+        self.temperature_label.setText("24°C")
+        self.temperature_label.setObjectName("temperatureLabel")
+        self.city_label.setText("Hrhov, SK")
+        self.city_label.setObjectName("cityLabel")
+        self.submit_button.clicked.connect(self.get_weather)
+        self.humidity_label.setText("💧60%")
+        self.humidity_label.setObjectName("humidityLabel")
+        self.pressure_label.setText("Pressure : 1004hPa")
+        self.pressure_label.setObjectName("pressureLabel")
+        self.wind_label.setText("30km/h N")
+        self.wind_label.setObjectName("windLabel")
 
         # Styling
         self.setStyleSheet("""
@@ -131,6 +154,31 @@ class AppWindow(QMainWindow):
                 font-family: Bahnschrift;
                 font-size: 25px;
             }
+            
+            QLabel#temperatureLabel{
+                font-family: Bahnschrift;
+                font-size: 35px;
+            }
+            
+            QLabel#cityLabel{
+                font-family: Bahnschrift;
+                font-size: 45px;
+            }
+            
+            QLabel#humidityLabel{
+                font-family: Bahnschrift;
+                font-size: 35px;
+            }
+            
+            QLabel#pressureLabel{
+                font-family: Bahnschrift;
+                font-size: 35px;
+            }
+            
+            QLabel#windLabel{
+                font-family: Bahnschrift;
+                font-size: 35px;
+            }
         """)
 
     def center_window(self):
@@ -146,3 +194,37 @@ class AppWindow(QMainWindow):
             print("The file exists")
         else:
             print("Error, the readme file doesn't exist!")
+
+    def get_weather(self):
+        api_key = "f0130aa9896b42e7eec767c74fbb474b"
+        city = self.text_field.text()
+        url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            data = response.json()
+            if data.get("cod") == 200:
+                data: dict
+                print(data)
+                self.format_data(data)
+            else:
+                print(f"Network error : {response.status_code}")
+        except requests.exceptions.HTTPError as e:
+            print(f"HTTP error : {e}")
+        except requests.exceptions.RequestException as e:
+            print(f"Request error : {e}")
+
+
+    def format_data(self, data):
+        if self.temp_unit == "c":
+            self.temp_sign = "°C"
+
+        elif self.temp_unit == "f":
+            self.temp_sign = "°F"
+
+        self.city_label.setText(f"{data.get("name")}")
+        self.temperature_label.setText(f"🌡️ {self.temperature}{self.temp_sign}")
+        self.pressure_label.setText(f"Pressure : {self.pressure}hPa")
+        self.humidity_label.setText(f"💧{self.humidity}%")
+        self.wind_label.setText(f"Wind : {self.wind_speed}km/h {self.wind_direction}")
