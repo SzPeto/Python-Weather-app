@@ -277,34 +277,20 @@ class AppWindow(QMainWindow):
         self.humidity_label.setText(f"💧{self.humidity}%")
         self.wind_label.setText(f"Wind : {self.wind_speed}km/h")
         self.wind_direction_label.setText(self.wind_direction)
-        self.date_time_label.setText(f"Local time : \n{local_time.strftime("%d.%m.%Y %H:%M:%S")}")
+        self.date_time_label.setText(f"Local date and time in {data.get("name")} : \n{local_time.strftime("%d.%m.%Y %H:%M:%S")}")
         self.set_emoji_description_label()
 
     def set_wind_direction(self, data):
         wind_degree = int(data.get("wind").get("deg"))
-        if 0 <= wind_degree <= 22:
-            self.wind_direction = "⬇️"
-        elif 23 <= wind_degree <= 67:
-            self.wind_direction = "↙️"
-        elif 68 <= wind_degree <= 112:
-            self.wind_direction = "⬅️"
-        elif 113 <= wind_degree <= 157:
-            self.wind_direction = "↖️"
-        elif 158 <= wind_degree <= 202:
-            self.wind_direction = "⬆️"
-        elif 203 <= wind_degree <= 247:
-            self.wind_direction = "↗️"
-        elif 248 <= wind_degree <= 292:
-            self.wind_direction = "➡️"
-        elif 293 <= wind_degree <= 337:
-            self.wind_direction = "↘️"
-        elif 338 <= wind_degree <= 360:
-            self.wind_direction = "⬇️"
+
+        wind_symbols = ("⬇️", "↙️", "⬅️", "↖️", "⬆️", "↗️", "➡️", "↘️")
+
+        wind_index = int( ((wind_degree + 22) % 360) // 45 )
+        self.wind_direction = wind_symbols[wind_index]
 
     def keyPressEvent(self, event):
         event: QKeyEvent
         key = event.key()
-        print(key)
         if key == 16777220 or 16777221:
             self.get_weather()
 
