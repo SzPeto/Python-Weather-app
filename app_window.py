@@ -39,7 +39,7 @@ class AppWindow(QMainWindow):
         self.h_box_wind = QHBoxLayout()
 
         # Labels, buttons, line edit and other
-        self.sun_icon = QIcon("sun-icon.png")
+        self.sun_icon = QIcon(self.resource_path("sun-icon.png"))
         self.text_field = QLineEdit()
         self.submit_button = QPushButton("Submit")
         self.description_label = QLabel()
@@ -338,7 +338,7 @@ class AppWindow(QMainWindow):
             self.emoji_label.setText("🌥️")
             self.description_label.setText("Clouds")
 
-    # Registering the fonts ***********************************************************************************
+    # Getting the resource paths
     def resource_path(self, realtive_path):
         # This method return either the absolute, or the relative file path, depending on whether it is
         # run by IDE or by a packaged exe file
@@ -347,6 +347,7 @@ class AppWindow(QMainWindow):
         else: # In case of IDE return the relative path
             return os.path.join(os.path.abspath("."), realtive_path)
 
+    # Registering the fonts ***********************************************************************************
     def register_fonts(self):
         font_id = ( QFontDatabase.addApplicationFont(self.resource_path("Fonts\\bahnschrift.ttf")),
                     QFontDatabase.addApplicationFont(self.resource_path("Fonts\\seguiemj.ttf")) )
