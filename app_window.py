@@ -7,7 +7,7 @@ import sys
 
 import requests
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QGuiApplication, QKeyEvent, QFontDatabase
+from PyQt5.QtGui import QGuiApplication, QKeyEvent, QFontDatabase, QIcon
 from PyQt5.QtWidgets import QApplication, QAction, QMenuBar, QMenu, QPushButton, QLabel, QFrame
 from PyQt5.QtWidgets import QMainWindow, QWidget, QLineEdit, QVBoxLayout, QHBoxLayout
 
@@ -39,6 +39,7 @@ class AppWindow(QMainWindow):
         self.h_box_wind = QHBoxLayout()
 
         # Labels, buttons, line edit and other
+        self.sun_icon = QIcon("sun-icon.png")
         self.text_field = QLineEdit()
         self.submit_button = QPushButton("Submit")
         self.description_label = QLabel()
@@ -113,6 +114,7 @@ class AppWindow(QMainWindow):
         self.center_window()
 
         # Labels, buttons, line edit
+        self.setWindowIcon(self.sun_icon)
         self.setWindowTitle("Weather app by Peter Szepesi v 0.8")
         self.text_field.setPlaceholderText("Enter a city name")
         self.text_field.setObjectName("textField")
@@ -141,6 +143,7 @@ class AppWindow(QMainWindow):
             QLineEdit#textField{
                 font-size: 25px;
                 font-family: Bahnschrift;
+                border-radius: 10px;
                 background-color: white;
             }
             
