@@ -1,1 +1,1 @@
-This is the help file
+Just type in any city name, hit enter or the submit button and you'll get the weather data

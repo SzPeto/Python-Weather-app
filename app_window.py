@@ -7,7 +7,7 @@ import sys
 
 import requests
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QGuiApplication, QKeyEvent
+from PyQt5.QtGui import QGuiApplication, QKeyEvent, QFontDatabase
 from PyQt5.QtWidgets import QApplication, QAction, QMenuBar, QMenu, QPushButton, QLabel, QFrame
 from PyQt5.QtWidgets import QMainWindow, QWidget, QLineEdit, QVBoxLayout, QHBoxLayout
 
@@ -71,6 +71,7 @@ class AppWindow(QMainWindow):
         self.help_file_path = "Help.txt"
 
         # Method calls
+        self.register_fonts()
         self.initUI()
 
     # UI initialization method *******************************************************************************
@@ -334,6 +335,24 @@ class AppWindow(QMainWindow):
         elif 801 <= self.weather_code <= 804:
             self.emoji_label.setText("🌥️")
             self.description_label.setText("Clouds")
+
+    def resource_path(self, realtive_path):
+        # This method return either the absolute, or the relative file path, depending on whether it is
+        # run by IDE or by a packaged exe file
+        if hasattr(sys, "_MEIPASS"):
+            return os.path.join(sys._MEIPASS, realtive_path) # In case of exe return the absolute path
+        else: # In case of IDE return the relative path
+            return os.path.join(os.path.abspath("."), realtive_path)
+
+    def register_fonts(self):
+        font_id = ( QFontDatabase.addApplicationFont(self.resource_path("Fonts\\bahnschrift.ttf")),
+                    QFontDatabase.addApplicationFont(self.resource_path("Fonts\\seguiemj.ttf")) )
+
+        for i in range(0, len(font_id)):
+            if font_id[i] == -1:
+                print(f"Failed to load the font at index : {i}")
+            else:
+                font_family = QFontDatabase.applicationFontFamilies(font_id[i])[0]
 
     # File opening methods ***********************************************************************************
     def open_read_me(self):
