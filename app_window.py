@@ -156,12 +156,23 @@ class AppWindow(QMainWindow):
             }
             
             QPushButton{
-                font-family: Bahnschrift;
-                font-size: 20px;
-                font-weight: bold;
+                font-family: Segoe UI;
+                font-size: 25px;
                 background-color: white;
                 margin: 10px;
                 padding: 5px;
+                border-radius: 10px;
+            }
+            
+            QPushButton:hover{
+                border-radius: 10px;
+                background-color: rgb(250, 250, 250);
+            }
+            
+            QPushButton:pressed{
+                background-color: rgb(215, 215, 215);
+                padding-top: 10px;
+                padding-bottom: 6px;
             }
             
             QLineEdit{
@@ -227,7 +238,6 @@ class AppWindow(QMainWindow):
             data = response.json()
             if data.get("cod") == 200:
                 data: dict
-                print(data)
                 self.format_data(data)
             else:
                 print(f"Network error : {response.status_code}")
