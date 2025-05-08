@@ -24,7 +24,7 @@ class AppWindow(QMainWindow):
         self.options_menu = QMenu("Options")
         self.help_menu = QMenu("Help")
         self.exit_action = QAction("Exit")
-        self.read_me_action = QAction("Read me")
+        self.help_action = QAction("Help")
         self.about_action = QAction("About")
 
         # Dimensions and geometry
@@ -66,10 +66,6 @@ class AppWindow(QMainWindow):
         self.g = 100
         self.b = 100
 
-
-        # Files
-        self.help_file_path = "Help.txt"
-
         # Method calls
         self.register_fonts()
         self.initUI()
@@ -86,10 +82,10 @@ class AppWindow(QMainWindow):
         self.menu_bar.addMenu(self.options_menu)
         self.menu_bar.addMenu(self.help_menu)
         self.file_menu.addAction(self.exit_action)
-        self.help_menu.addAction(self.read_me_action)
+        self.help_menu.addAction(self.help_action)
         self.help_menu.addAction(self.about_action)
         self.exit_action.triggered.connect(self.close_app)
-        self.read_me_action.triggered.connect(self.open_read_me)
+        self.help_action.triggered.connect(self.open_help)
         self.about_action.triggered.connect(self.open_about)
 
         # Layout
@@ -117,7 +113,7 @@ class AppWindow(QMainWindow):
         self.center_window()
 
         # Labels, buttons, line edit
-        self.setWindowTitle("Weather app by Peter Szepesi")
+        self.setWindowTitle("Weather app by Peter Szepesi v 0.8")
         self.text_field.setPlaceholderText("Enter a city name")
         self.text_field.setObjectName("textField")
         self.text_field.setFixedWidth(int(self.width() * 0.4))
@@ -162,15 +158,18 @@ class AppWindow(QMainWindow):
                 background-color: white;
                 margin: 10px;
                 padding: 5px;
+                border: 2px solid #cccccc;
                 border-radius: 10px;
             }
             
             QPushButton:hover{
+                border: 2px solid #aaaaaa;
                 border-radius: 10px;
-                background-color: rgb(250, 250, 250);
+                background-color: rgb(248, 248, 248);
             }
             
             QPushButton:pressed{
+                border: 2px inset #888888;
                 background-color: rgb(215, 215, 215);
                 padding-top: 10px;
                 padding-bottom: 6px;
@@ -336,6 +335,7 @@ class AppWindow(QMainWindow):
             self.emoji_label.setText("🌥️")
             self.description_label.setText("Clouds")
 
+    # Registering the fonts ***********************************************************************************
     def resource_path(self, realtive_path):
         # This method return either the absolute, or the relative file path, depending on whether it is
         # run by IDE or by a packaged exe file
@@ -355,11 +355,26 @@ class AppWindow(QMainWindow):
                 font_family = QFontDatabase.applicationFontFamilies(font_id[i])[0]
 
     # File opening methods ***********************************************************************************
-    def open_read_me(self):
-        if os.path.exists(self.help_file_path):
-            print("The file exists")
-        else:
-            print("Error, the readme file doesn't exist!")
+    def open_help(self):
+        help_file_path = "Help.txt"
+
+        try:
+            if platform.system() == "Windows":
+                os.startfile(help_file_path)
+            elif platform.system() == "Darwin":
+                subprocess.call(["open", help_file_path])
+            else:
+                subprocess.call(["xdg-open", help_file_path])
+
+            with open(help_file_path, "r") as file:
+                content = file.read()
+                print(content)
+        except FileNotFoundError:
+            print("File not found")
+        except PermissionError:
+            print("You don't have permission to open this file")
+        except Exception as e:
+            print(f"Something went wrong, error message : {e}")
 
     def open_about(self):
         about_file_path = "About.txt"
@@ -379,3 +394,5 @@ class AppWindow(QMainWindow):
             print("File not found")
         except PermissionError:
             print("You don't have permission to open this file")
+        except Exception as e:
+            print(f"Something went wrong, error message : {e}")

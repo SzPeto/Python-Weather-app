@@ -1,0 +1,6 @@
+pyinstaller --noconsole - # It tells the system to run without console in background
+            --add-data "Fonts\\bahnschrift.ttf;Fonts" # Adding manually the files, the Fonts mean it should be in that directory
+            --add-data "Fonts\\seguiemj.ttf;Fonts"
+            --add-data "About.txt;." # Adding manually the files, the "." mean it should be in the same directory
+            --add-data "Help.txt;."
+            --onefile Main.py
