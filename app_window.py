@@ -1,5 +1,8 @@
 import datetime
 import os.path
+import platform
+import stat
+import subprocess
 import sys
 
 import requests
@@ -22,6 +25,7 @@ class AppWindow(QMainWindow):
         self.help_menu = QMenu("Help")
         self.exit_action = QAction("Exit")
         self.read_me_action = QAction("Read me")
+        self.about_action = QAction("About")
 
         # Dimensions and geometry
         self.monitor = QGuiApplication.primaryScreen().geometry()
@@ -69,7 +73,7 @@ class AppWindow(QMainWindow):
         # Method calls
         self.initUI()
 
-
+    # UI initialization method *******************************************************************************
     def initUI(self):
 
         # Main
@@ -82,8 +86,10 @@ class AppWindow(QMainWindow):
         self.menu_bar.addMenu(self.help_menu)
         self.file_menu.addAction(self.exit_action)
         self.help_menu.addAction(self.read_me_action)
+        self.help_menu.addAction(self.about_action)
         self.exit_action.triggered.connect(self.close_app)
         self.read_me_action.triggered.connect(self.open_read_me)
+        self.about_action.triggered.connect(self.open_about)
 
         # Layout
         self.central_widget.setLayout(self.h_box_main)
@@ -209,20 +215,7 @@ class AppWindow(QMainWindow):
             }
         """)
 
-    def center_window(self):
-        x = int((self.monitor.width() - self.window_width) / 2)
-        y = int((self.monitor.height() - self.window_height) / 2)
-        self.setGeometry(x, y, self.window_width, self.window_height)
-
-    def close_app(self):
-        sys.exit(0)
-
-    def open_read_me(self):
-        if os.path.exists(self.help_file_path):
-            print("The file exists")
-        else:
-            print("Error, the readme file doesn't exist!")
-
+    # Event handling and signal-slot related methods *********************************************************
     def get_weather(self):
         api_key = "f0130aa9896b42e7eec767c74fbb474b"
         city = self.text_field.text()
@@ -243,13 +236,27 @@ class AppWindow(QMainWindow):
         except requests.exceptions.RequestException as e:
             print(f"Request error : {e}")
 
+    def close_app(self):
+        sys.exit(0)
 
+    def keyPressEvent(self, event):
+        event: QKeyEvent
+        key = event.key()
+        if key == 16777220 or 16777221:
+            self.get_weather()
+
+    # Layout and dimension related methods ********************************************************************
+    def center_window(self):
+        x = int((self.monitor.width() - self.window_width) / 2)
+        y = int((self.monitor.height() - self.window_height) / 2)
+        self.setGeometry(x, y, self.window_width, self.window_height)
+
+    # Data management and formatting methods *****************************************************************
     def format_data(self, data):
 
         # Getting the temperature
         self.temp_sign = "°C"
         self.temperature = float(data.get("main").get("temp")) - 273.15
-
 
         # Getting the humidity
         self.humidity = int(data.get("main").get("humidity"))
@@ -265,7 +272,7 @@ class AppWindow(QMainWindow):
         self.unix_timestamp = int(data.get("dt"))
         self.time_zone_correction = int(data.get("timezone"))
         self.utc_time = datetime.datetime.fromtimestamp(self.unix_timestamp, datetime.UTC)
-        local_time = self.utc_time + datetime.timedelta(seconds = self.time_zone_correction)
+        local_time = self.utc_time + datetime.timedelta(seconds=self.time_zone_correction)
 
         # Getting the weather code
         self.weather_code = data.get("weather")[0].get("id")
@@ -277,7 +284,8 @@ class AppWindow(QMainWindow):
         self.humidity_label.setText(f"💧{self.humidity}%")
         self.wind_label.setText(f"Wind : {self.wind_speed}km/h")
         self.wind_direction_label.setText(self.wind_direction)
-        self.date_time_label.setText(f"Local date and time in {data.get("name")} : \n{local_time.strftime("%d.%m.%Y %H:%M:%S")}")
+        self.date_time_label.setText(
+            f"Local date and time in {data.get("name")} : \n{local_time.strftime("%d.%m.%Y %H:%M:%S")}")
         self.set_emoji_description_label()
 
     def set_wind_direction(self, data):
@@ -285,14 +293,8 @@ class AppWindow(QMainWindow):
 
         wind_symbols = ("⬇️", "↙️", "⬅️", "↖️", "⬆️", "↗️", "➡️", "↘️")
 
-        wind_index = int( ((wind_degree + 22) % 360) // 45 )
+        wind_index = int(((wind_degree + 22) % 360) // 45)
         self.wind_direction = wind_symbols[wind_index]
-
-    def keyPressEvent(self, event):
-        event: QKeyEvent
-        key = event.key()
-        if key == 16777220 or 16777221:
-            self.get_weather()
 
     def set_emoji_description_label(self):
         if 200 <= self.weather_code <= 232:
@@ -322,3 +324,29 @@ class AppWindow(QMainWindow):
         elif 801 <= self.weather_code <= 804:
             self.emoji_label.setText("🌥️")
             self.description_label.setText("Clouds")
+
+    # File opening methods ***********************************************************************************
+    def open_read_me(self):
+        if os.path.exists(self.help_file_path):
+            print("The file exists")
+        else:
+            print("Error, the readme file doesn't exist!")
+
+    def open_about(self):
+        about_file_path = "About.txt"
+
+        try:
+            if platform.system() == "Windows":
+                os.startfile(about_file_path)
+            elif platform.system() == "Darwin":
+                subprocess.call(["open", about_file_path])
+            else:
+                subprocess.call(["xdg-open", about_file_path])
+
+            with open(about_file_path, "r") as file:
+                content = file.read()
+                print(content)
+        except FileNotFoundError:
+            print("File not found")
+        except PermissionError:
+            print("You don't have permission to open this file")
