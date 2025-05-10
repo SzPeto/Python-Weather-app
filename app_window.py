@@ -108,7 +108,7 @@ class AppWindow(QMainWindow):
         # Menu
         self.setMenuBar(self.menu_bar)
         self.menu_bar.addMenu(self.file_menu)
-        self.menu_bar.addMenu(self.options_menu)
+        #self.menu_bar.addMenu(self.options_menu)
         self.menu_bar.addMenu(self.help_menu)
         self.file_menu.addAction(self.exit_action)
         self.help_menu.addAction(self.help_action)
@@ -124,7 +124,7 @@ class AppWindow(QMainWindow):
         self.separator.setLineWidth(2)
         self.h_box_wind.addWidget(self.wind_icon_label)
         self.h_box_wind.addWidget(self.wind_label, alignment = Qt.AlignRight)
-        self.h_box_wind.addWidget(self.wind_direction_label, alignment = Qt.AlignHCenter)
+        self.h_box_wind.addWidget(self.wind_direction_label, alignment = Qt.AlignLeft)
         self.h_box_temperature.addWidget(self.temperature_icon_label)
         self.h_box_temperature.addWidget(self.temperature_label)
         self.h_box_humidity.addWidget(self.humidity_icon_label)
@@ -164,7 +164,7 @@ class AppWindow(QMainWindow):
         self.temperature_label.setPixmap(self.temperature_icon_pixmap)
         self.temperature_label.setText("0°C")
         self.temperature_label.setObjectName("temperatureLabel")
-        self.city_label.setText("No data")
+        self.city_label.setText("")
         self.city_label.setObjectName("cityLabel")
         self.submit_button.clicked.connect(self.get_weather)
         self.humidity_label.setText("0%")
@@ -282,7 +282,6 @@ class AppWindow(QMainWindow):
             if data.get("cod") == 200:
                 data: dict
                 self.format_data(data)
-                print(data)
             else:
                 print(f"Network error : {response.status_code}")
         except requests.exceptions.HTTPError as e:
@@ -341,7 +340,7 @@ class AppWindow(QMainWindow):
         self.wind_direction_label.setText(self.wind_direction)
         self.date_time_label.setText(
             f"Local date and time in {data.get("name")} : \n{local_time.strftime("%d.%m.%Y %H:%M:%S")}")
-        self.set_emoji_description_label()
+        self.set_emoji_label()
 
     def set_wind_direction(self, data):
         wind_degree = int(data.get("wind").get("deg"))
@@ -351,7 +350,7 @@ class AppWindow(QMainWindow):
         wind_index = int(((wind_degree + 22) % 360) // 45)
         self.wind_direction = wind_symbols[wind_index]
 
-    def set_emoji_description_label(self):
+    def set_emoji_label(self):
         if 200 <= self.weather_code <= 232:
             self.emoji_label.setPixmap(self.thunderstorm_icon_pixmap)
         elif 300 <= self.weather_code <= 321:
@@ -377,8 +376,8 @@ class AppWindow(QMainWindow):
         # run by IDE or by a packaged exe file
         if hasattr(sys, "_MEIPASS"):
             return os.path.join(sys._MEIPASS, realtive_path) # In case of exe return the absolute path
-        else: # In case of IDE return the relative path
-            return os.path.join(os.path.abspath("."), realtive_path)
+        else:
+            return os.path.join(os.path.abspath("."), realtive_path) # In case of IDE return the relative path
 
     # Registering the fonts ***********************************************************************************
     def register_fonts(self):
