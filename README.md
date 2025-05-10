@@ -1,0 +1,2 @@
+This is a simple weather app. Please note, that this is my first working app ever, so I apologize if the app doesn't work as expected. In case of any issues, please send me a feedback to : szpeto12@gmail.com. Thank you very much!
+License : MIT
