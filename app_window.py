@@ -156,7 +156,7 @@ class AppWindow(QMainWindow):
         self.text_field.setFixedWidth(int(self.width() * 0.4))
         self.description_label.setText("Waiting for city name")
         self.description_label.setObjectName("descriptionLabel")
-        self.emoji_label.setPixmap(self.snow_icon_pixmap)
+        self.emoji_label.setPixmap(self.sunny_icon_pixmap)
         self.pressure_icon_label.setPixmap(self.pressure_icon_pixmap)
         self.humidity_icon_label.setPixmap(self.humidity_icon_pixmap)
         self.temperature_icon_label.setPixmap(self.temperature_icon_pixmap)
