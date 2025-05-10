@@ -5,7 +5,7 @@ a = Analysis(
     ['Main.py'],
     pathex=[],
     binaries=[],
-    datas=[('Fonts\\\\bahnschrift.ttf', 'Fonts'), ('Fonts\\\\seguiemj.ttf', 'Fonts'), ('About.txt', '.'), ('Help.txt', '.'), ('sun-icon.png', '.')],
+    datas=[('VCRuntime\\\\msvcp140.dll', '.'), ('VCRuntime\\\\vcruntime140.dll', '.'), ('sun-icon.png', '.'), ('Help.txt', '.'), ('About.txt', '.'), ('Fonts', 'Fonts'), ('Weather_Icons', 'Weather_Icons')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

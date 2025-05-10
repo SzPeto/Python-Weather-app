@@ -37,17 +37,48 @@ class AppWindow(QMainWindow):
         self.v_box_left = QVBoxLayout()
         self.v_box_right = QVBoxLayout()
         self.h_box_wind = QHBoxLayout()
+        self.h_box_temperature = QHBoxLayout()
+        self.h_box_humidity = QHBoxLayout()
+        self.h_box_pressure = QHBoxLayout()
 
         # Labels, buttons, line edit and other
         self.sun_icon = QIcon(self.resource_path("sun-icon.png"))
+        self.sunny_icon = QIcon(self.resource_path("Weather_Icons\\sun - minimalist.png"))
+        self.sunny_icon_pixmap = self.sunny_icon.pixmap(100, 100)
+        self.cloudy_icon = QIcon(self.resource_path("Weather_Icons\\cloud - minimalist.png"))
+        self.cloudy_icon_pixmap = self.cloudy_icon.pixmap(100, 100)
+        self.suncloud_icon = QIcon(self.resource_path("Weather_Icons\\cloud - sun - minimalist.png"))
+        self.suncloud_icon_pixmap = self.suncloud_icon.pixmap(100, 100)
+        self.overcast_icon = QIcon(self.resource_path("Weather_Icons\\overcast - minimalist.png"))
+        self.overcast_icon_pixmap = self.overcast_icon.pixmap(100, 100)
+        self.rain_icon = QIcon(self.resource_path("Weather_Icons\\rain - minimalist.png"))
+        self.rain_icon_pixmap = self.rain_icon.pixmap(100, 100)
+        self.thunderstorm_icon = QIcon(self.resource_path("Weather_Icons\\thunderstorm - minimalist.png"))
+        self.thunderstorm_icon_pixmap = self.thunderstorm_icon.pixmap(100, 100)
+        self.fog_icon = QIcon(self.resource_path("Weather_Icons\\fog - minimalist.png"))
+        self.fog_icon_pixmap = self.fog_icon.pixmap(100, 100)
+        self.snow_icon = QIcon(self.resource_path("Weather_Icons\\snowfall - minimalist.png"))
+        self.snow_icon_pixmap = self.snow_icon.pixmap(100, 100)
+        self.pressure_icon = QIcon(self.resource_path("Weather_Icons\\pressure - minimalist.png"))
+        self.pressure_icon_pixmap = self.pressure_icon.pixmap(40, 40)
+        self.humidity_icon = QIcon(self.resource_path("Weather_Icons\\humidity.png"))
+        self.humidity_icon_pixmap = self.humidity_icon.pixmap(40, 40)
+        self.wind_icon = QIcon(self.resource_path("Weather_Icons\\wind - minimalist.png"))
+        self.wind_icon_pixmap = self.wind_icon.pixmap(40, 40)
+        self.temperature_icon = QIcon(self.resource_path("Weather_Icons\\temperature - minimalist.png"))
+        self.temperature_icon_pixmap = self.temperature_icon.pixmap(40, 40)
         self.text_field = QLineEdit()
         self.submit_button = QPushButton("Submit")
         self.description_label = QLabel()
+        self.temperature_icon_label = QLabel()
         self.temperature_label = QLabel()
         self.emoji_label = QLabel()
         self.city_label = QLabel()
+        self.humidity_icon_label = QLabel()
         self.humidity_label = QLabel()
+        self.pressure_icon_label = QLabel()
         self.pressure_label = QLabel()
+        self.wind_icon_label = QLabel()
         self.wind_label = QLabel()
         self.wind_direction_label = QLabel()
         self.date_time_label = QLabel()
@@ -63,9 +94,6 @@ class AppWindow(QMainWindow):
         self.utc_time = 0
         self.time_zone_correction = 0
         self.weather_code = 0
-        self.r = 255
-        self.g = 100
-        self.b = 100
 
         # Method calls
         self.register_fonts()
@@ -94,17 +122,24 @@ class AppWindow(QMainWindow):
         self.separator.setFrameShape(QFrame.VLine)
         self.separator.setFrameShadow(QFrame.Sunken)
         self.separator.setLineWidth(2)
+        self.h_box_wind.addWidget(self.wind_icon_label)
         self.h_box_wind.addWidget(self.wind_label, alignment = Qt.AlignRight)
         self.h_box_wind.addWidget(self.wind_direction_label, alignment = Qt.AlignHCenter)
+        self.h_box_temperature.addWidget(self.temperature_icon_label)
+        self.h_box_temperature.addWidget(self.temperature_label)
+        self.h_box_humidity.addWidget(self.humidity_icon_label)
+        self.h_box_humidity.addWidget(self.humidity_label)
+        self.h_box_pressure.addWidget(self.pressure_icon_label)
+        self.h_box_pressure.addWidget(self.pressure_label)
         self.v_box_left.addWidget(self.text_field, alignment = Qt.AlignHCenter)
         self.v_box_left.addWidget(self.submit_button, alignment = Qt.AlignTop | Qt.AlignHCenter)
         self.v_box_left.addWidget(self.date_time_label, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.city_label, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.emoji_label, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.description_label, alignment=Qt.AlignHCenter)
-        self.v_box_right.addWidget(self.temperature_label, alignment = Qt.AlignHCenter)
-        self.v_box_right.addWidget(self.humidity_label, alignment = Qt.AlignHCenter)
-        self.v_box_right.addWidget(self.pressure_label, alignment = Qt.AlignHCenter)
+        self.v_box_right.addLayout(self.h_box_temperature)
+        self.v_box_right.addLayout(self.h_box_humidity)
+        self.v_box_right.addLayout(self.h_box_pressure)
         self.v_box_right.addLayout(self.h_box_wind)
         self.h_box_main.addLayout(self.v_box_left)
         self.h_box_main.addWidget(self.separator)
@@ -119,20 +154,25 @@ class AppWindow(QMainWindow):
         self.text_field.setPlaceholderText("Enter a city name")
         self.text_field.setObjectName("textField")
         self.text_field.setFixedWidth(int(self.width() * 0.4))
-        self.description_label.setText("This is the weather description")
+        self.description_label.setText("Waiting for city name")
         self.description_label.setObjectName("descriptionLabel")
-        self.emoji_label.setText("☀️")
+        self.emoji_label.setPixmap(self.snow_icon_pixmap)
+        self.pressure_icon_label.setPixmap(self.pressure_icon_pixmap)
+        self.humidity_icon_label.setPixmap(self.humidity_icon_pixmap)
+        self.temperature_icon_label.setPixmap(self.temperature_icon_pixmap)
         self.emoji_label.setObjectName("emojiLabel")
-        self.temperature_label.setText("🌡️0°C")
+        self.temperature_label.setPixmap(self.temperature_icon_pixmap)
+        self.temperature_label.setText("0°C")
         self.temperature_label.setObjectName("temperatureLabel")
-        self.city_label.setText("")
+        self.city_label.setText("No data")
         self.city_label.setObjectName("cityLabel")
         self.submit_button.clicked.connect(self.get_weather)
-        self.humidity_label.setText("💧0%")
+        self.humidity_label.setText("0%")
         self.humidity_label.setObjectName("humidityLabel")
-        self.pressure_label.setText("Pressure : 0hPa")
+        self.pressure_label.setText("0hPa")
         self.pressure_label.setObjectName("pressureLabel")
-        self.wind_label.setText("Wind : 0km/h")
+        self.wind_icon_label.setPixmap(self.wind_icon_pixmap)
+        self.wind_label.setText("0km/h")
         self.wind_label.setObjectName("windLabel")
         self.wind_direction_label.setText("⬆️")
         self.wind_direction_label.setObjectName("windDirectionLabel")
@@ -242,6 +282,7 @@ class AppWindow(QMainWindow):
             if data.get("cod") == 200:
                 data: dict
                 self.format_data(data)
+                print(data)
             else:
                 print(f"Network error : {response.status_code}")
         except requests.exceptions.HTTPError as e:
@@ -291,11 +332,12 @@ class AppWindow(QMainWindow):
         self.weather_code = data.get("weather")[0].get("id")
 
         # Formatting the data
-        self.city_label.setText(f"{data.get("name")}")
-        self.temperature_label.setText(f"🌡️{self.temperature:.1f}{self.temp_sign}")
-        self.pressure_label.setText(f"Pressure : {self.pressure}hPa")
-        self.humidity_label.setText(f"💧{self.humidity}%")
-        self.wind_label.setText(f"Wind : {self.wind_speed}km/h")
+        self.description_label.setText(data.get("weather")[0].get("description"))
+        self.city_label.setText(f"{data.get("name")}, {data.get("sys").get("country")}")
+        self.temperature_label.setText(f"{self.temperature:.1f}{self.temp_sign}")
+        self.pressure_label.setText(f"{self.pressure}hPa")
+        self.humidity_label.setText(f"{self.humidity}%")
+        self.wind_label.setText(f"{self.wind_speed}km/h")
         self.wind_direction_label.setText(self.wind_direction)
         self.date_time_label.setText(
             f"Local date and time in {data.get("name")} : \n{local_time.strftime("%d.%m.%Y %H:%M:%S")}")
@@ -311,32 +353,23 @@ class AppWindow(QMainWindow):
 
     def set_emoji_description_label(self):
         if 200 <= self.weather_code <= 232:
-            self.emoji_label.setText("⛈️")
-            self.description_label.setText("Thunderstorms")
+            self.emoji_label.setPixmap(self.thunderstorm_icon_pixmap)
         elif 300 <= self.weather_code <= 321:
-            self.emoji_label.setText("🌦️")
-            self.description_label.setText("Drizzle")
+            self.emoji_label.setPixmap(self.rain_icon_pixmap)
         elif 500 <= self.weather_code <= 504:
-            self.emoji_label.setText("🌦️")
-            self.description_label.setText("Rain")
+            self.emoji_label.setPixmap(self.rain_icon_pixmap)
         elif self.weather_code == 511:
-            self.emoji_label.setText("❄️")
-            self.description_label.setText("Freezing rain")
+            self.emoji_label.setPixmap(self.snow_icon_pixmap)
         elif 520 <= self.weather_code <= 522 or self.weather_code == 531:
-            self.emoji_label.setText("🌧️")
-            self.description_label.setText("Rain")
+            self.emoji_label.setPixmap(self.rain_icon_pixmap)
         elif 600 <= self.weather_code <= 622:
-            self.emoji_label.setText("❄️")
-            self.description_label.setText("Snow")
+            self.emoji_label.setPixmap(self.snow_icon_pixmap)
         elif 701 <= self.weather_code <= 781:
-            self.emoji_label.setText("🌫️")
-            self.description_label.setText("Fog / dust")
+            self.emoji_label.setPixmap(self.fog_icon_pixmap)
         elif self.weather_code == 800:
-            self.emoji_label.setText("☀️")
-            self.description_label.setText("Clear")
+            self.emoji_label.setPixmap(self.sunny_icon_pixmap)
         elif 801 <= self.weather_code <= 804:
-            self.emoji_label.setText("🌥️")
-            self.description_label.setText("Clouds")
+            self.emoji_label.setPixmap(self.cloudy_icon_pixmap)
 
     # Getting the resource paths
     def resource_path(self, realtive_path):

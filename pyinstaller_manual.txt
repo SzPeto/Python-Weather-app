@@ -5,4 +5,6 @@ pyinstaller --noconsole - # It tells the system to run without console in backgr
             --add-data "Help.txt;."
             --onefile Main.py
 
-pyinstaller --noconsole --add-data "Fonts\\bahnschrift.ttf;Fonts" --add-data "Fonts\\seguiemj.ttf;Fonts" --add-data "About.txt;." --add-data "Help.txt;." --add-data "sun-icon.png;." --onefile Main.py
+Add the 2 dll's into VCRuntime folder, to bundle with app the Visual C++ runtime
+
+pyinstaller --noconsole --add-data "VCRuntime\\msvcp140.dll;." --add-data "VCRuntime\\vcruntime140.dll;." --add-data "sun-icon.png;." --add-data "Help.txt;." --add-data "About.txt;." --add-data "Fonts;Fonts" --add-data "Weather_Icons;Weather_Icons" --onefile Main.py
