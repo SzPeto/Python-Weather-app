@@ -1,1 +1,7 @@
 Just type in any city name, hit enter or the submit button and you'll get the weather data
+
+Fields:
+    1 : Temperature
+    2 : Humidity
+    3 : Air pressure
+    4 : Wind speed and direction (The arrow shows the direction of wind)
