@@ -1,3 +1,5 @@
+# TODO - make exception handling for deepl API
+
 import datetime
 import os.path
 import platform
@@ -10,6 +12,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QGuiApplication, QKeyEvent, QFontDatabase, QIcon
 from PyQt5.QtWidgets import QApplication, QAction, QMenuBar, QMenu, QPushButton, QLabel, QFrame
 from PyQt5.QtWidgets import QMainWindow, QWidget, QLineEdit, QVBoxLayout, QHBoxLayout
+
+import deepl
 
 
 class AppWindow(QMainWindow):
@@ -94,6 +98,9 @@ class AppWindow(QMainWindow):
         self.utc_time = 0
         self.time_zone_correction = 0
         self.weather_code = 0
+        self.language = "en"
+        self.API_key_deepl = "567820c6-2932-495c-b0a8-db41851577c1:fx"
+        self.translate = deepl.Translator(self.API_key_deepl)
 
         # Method calls
         self.register_fonts()
@@ -331,7 +338,12 @@ class AppWindow(QMainWindow):
         self.weather_code = data.get("weather")[0].get("id")
 
         # Formatting the data
-        self.description_label.setText(data.get("weather")[0].get("description"))
+        description_en = data.get("weather")[0].get("description")
+        if self.language != "en":
+            description_translated = self.translate.translate_text(description_en, target_lang = "SK").text
+            self.description_label.setText(description_translated)
+        else:
+            self.description_label.setText(description_en)
         self.city_label.setText(f"{data.get("name")}, {data.get("sys").get("country")}")
         self.temperature_label.setText(f"{self.temperature:.1f}{self.temp_sign}")
         self.pressure_label.setText(f"{self.pressure}hPa")
