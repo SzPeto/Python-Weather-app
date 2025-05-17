@@ -6,6 +6,7 @@ import platform
 import stat
 import subprocess
 import sys
+import webbrowser
 
 import requests
 from PyQt5.QtCore import Qt
@@ -101,6 +102,7 @@ class AppWindow(QMainWindow):
         self.language = "en"
         self.API_key_deepl = "567820c6-2932-495c-b0a8-db41851577c1:fx"
         self.translate = deepl.Translator(self.API_key_deepl)
+        self.support_me_button = QPushButton("Support me")
 
         # Method calls
         self.register_fonts()
@@ -141,6 +143,7 @@ class AppWindow(QMainWindow):
         self.v_box_left.addWidget(self.text_field, alignment = Qt.AlignHCenter)
         self.v_box_left.addWidget(self.submit_button, alignment = Qt.AlignTop | Qt.AlignHCenter)
         self.v_box_left.addWidget(self.date_time_label, alignment = Qt.AlignHCenter)
+        self.v_box_left.addWidget(self.support_me_button, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.city_label, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.emoji_label, alignment = Qt.AlignHCenter)
         self.v_box_right.addWidget(self.description_label, alignment=Qt.AlignHCenter)
@@ -184,6 +187,8 @@ class AppWindow(QMainWindow):
         self.wind_direction_label.setText("⬆️")
         self.wind_direction_label.setObjectName("windDirectionLabel")
         self.date_time_label.setObjectName("dateTimeLabel")
+        self.support_me_button.clicked.connect(self.support_me)
+        self.support_me_button.setObjectName("supportMeButton")
 
         # Styling
         self.setStyleSheet("""
@@ -274,6 +279,12 @@ class AppWindow(QMainWindow):
                 font-family: Bahnschrift;
                 font-size: 25px;
             }
+            
+            QPushButton#supportMeButton{
+                font-family: Bahnschrift;
+                font-size: 20px;
+            }
+            
         """)
 
     # Event handling and signal-slot related methods *********************************************************
@@ -383,13 +394,13 @@ class AppWindow(QMainWindow):
             self.emoji_label.setPixmap(self.cloudy_icon_pixmap)
 
     # Getting the resource paths
-    def resource_path(self, realtive_path):
+    def resource_path(self, relative_path):
         # This method return either the absolute, or the relative file path, depending on whether it is
         # run by IDE or by a packaged exe file
         if hasattr(sys, "_MEIPASS"):
-            return os.path.join(sys._MEIPASS, realtive_path) # In case of exe return the absolute path
+            return os.path.join(sys._MEIPASS, relative_path) # In case of exe return the absolute path
         else:
-            return os.path.join(os.path.abspath("."), realtive_path) # In case of IDE return the relative path
+            return os.path.join(os.path.abspath("."), relative_path) # In case of IDE return the relative path
 
     # Registering the fonts ***********************************************************************************
     def register_fonts(self):
@@ -444,3 +455,6 @@ class AppWindow(QMainWindow):
             print("You don't have permission to open this file")
         except Exception as e:
             print(f"Something went wrong, error message : {e}")
+
+    def support_me(self):
+        webbrowser.open("https://www.paypal.me/szpeto")
