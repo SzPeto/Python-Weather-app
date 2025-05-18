@@ -11,7 +11,7 @@ import webbrowser
 import requests
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QGuiApplication, QKeyEvent, QFontDatabase, QIcon
-from PyQt5.QtWidgets import QApplication, QAction, QMenuBar, QMenu, QPushButton, QLabel, QFrame
+from PyQt5.QtWidgets import QApplication, QAction, QMenuBar, QMenu, QPushButton, QLabel, QFrame, QComboBox
 from PyQt5.QtWidgets import QMainWindow, QWidget, QLineEdit, QVBoxLayout, QHBoxLayout
 
 import deepl
@@ -88,8 +88,6 @@ class AppWindow(QMainWindow):
         self.wind_direction_label = QLabel()
         self.date_time_label = QLabel()
         self.separator = QFrame()
-        self.temp_unit = "c"
-        self.temp_sign = "°C"
         self.temperature = 0
         self.humidity = 0
         self.wind_speed = 0
@@ -103,6 +101,12 @@ class AppWindow(QMainWindow):
         self.API_key_deepl = "567820c6-2932-495c-b0a8-db41851577c1:fx"
         self.translate = deepl.Translator(self.API_key_deepl)
         self.support_me_button = QPushButton("Support me")
+        self.temperature_combo = QComboBox()
+        self.speed_combo = QComboBox()
+
+        # Units
+        self.temp_unit = "°C"
+        self.speed_unit = "km/h"
 
         # Method calls
         self.register_fonts()
@@ -134,8 +138,10 @@ class AppWindow(QMainWindow):
         self.h_box_wind.addWidget(self.wind_icon_label)
         self.h_box_wind.addWidget(self.wind_label, alignment = Qt.AlignRight)
         self.h_box_wind.addWidget(self.wind_direction_label, alignment = Qt.AlignLeft)
+        self.h_box_wind.addWidget(self.speed_combo, alignment = Qt.AlignRight)
         self.h_box_temperature.addWidget(self.temperature_icon_label)
-        self.h_box_temperature.addWidget(self.temperature_label)
+        self.h_box_temperature.addWidget(self.temperature_label, alignment = Qt.AlignHCenter)
+        self.h_box_temperature.addWidget(self.temperature_combo, alignment = Qt.AlignRight)
         self.h_box_humidity.addWidget(self.humidity_icon_label)
         self.h_box_humidity.addWidget(self.humidity_label)
         self.h_box_pressure.addWidget(self.pressure_icon_label)
@@ -189,6 +195,10 @@ class AppWindow(QMainWindow):
         self.date_time_label.setObjectName("dateTimeLabel")
         self.support_me_button.clicked.connect(self.support_me)
         self.support_me_button.setObjectName("supportMeButton")
+        self.temperature_combo.addItems(["°C", "°F", "K"])
+        self.speed_combo.addItems(["km/h", "mph", "m/s"])
+        self.temperature_combo.currentIndexChanged.connect(self.temp_unit_change)
+        self.speed_combo.currentIndexChanged.connect(self.speed_unit_change)
 
         # Styling
         self.setStyleSheet("""
@@ -317,6 +327,31 @@ class AppWindow(QMainWindow):
         if key == 16777220 or 16777221:
             self.get_weather()
 
+    def support_me(self):
+        webbrowser.open("https://www.paypal.me/szpeto")
+        self.button_click_counter("support_me")
+
+    def button_click_counter(self, button_name):
+        url = f"https://api.counterapi.dev/v1/szpeto_weather_app/{button_name}/up"
+
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            if response.status_code == 200:
+                data = response.json()
+                print(f"The {data.get("name")} button clicked count for weather app is : {data.get("count")}")
+            else:
+                print("Cannot connect to the counter API")
+        except Exception as e:
+            print(f"Error getting the counter request : {e}")
+
+    def temp_unit_change(self):
+        self.temp_unit = self.temperature_combo.currentText()
+        self.get_weather()
+
+    def speed_unit_change(self):
+        self.speed_unit = self.speed_combo.currentText()
+        self.get_weather()
     # Layout and dimension related methods ********************************************************************
     def center_window(self):
         x = int((self.monitor.width() - self.window_width) / 2)
@@ -327,8 +362,13 @@ class AppWindow(QMainWindow):
     def format_data(self, data):
 
         # Getting the temperature
-        self.temp_sign = "°C"
-        self.temperature = float(data.get("main").get("temp")) - 273.15
+        temp_temperature = float(data.get("main").get("temp"))
+        if self.temp_unit == "°C":
+            self.temperature = temp_temperature - 273.15
+        elif self.temp_unit == "°F":
+            self.temperature = (temp_temperature - 273.15) * 1.8 + 32
+        elif self.temp_unit == "K":
+            self.temperature = temp_temperature
 
         # Getting the humidity
         self.humidity = int(data.get("main").get("humidity"))
@@ -337,7 +377,14 @@ class AppWindow(QMainWindow):
         self.pressure = int(data.get("main").get("pressure"))
 
         # Getting the wind
-        self.wind_speed = int(float(data.get("wind").get("speed")) * 3.6)
+        temp_speed = float(data.get("wind").get("speed"))
+        if self.speed_unit == "km/h":
+            self.wind_speed = int(temp_speed * 3.6)
+        elif self.speed_unit == "mph":
+            self.wind_speed = int(temp_speed * 2.23694)
+        elif self.speed_unit == "m/s":
+            self.wind_speed = int(temp_speed)
+
         self.set_wind_direction(data)
 
         # Getting the date and time
@@ -357,10 +404,10 @@ class AppWindow(QMainWindow):
         else:
             self.description_label.setText(description_en)
         self.city_label.setText(f"{data.get("name")}, {data.get("sys").get("country")}")
-        self.temperature_label.setText(f"{self.temperature:.1f}{self.temp_sign}")
+        self.temperature_label.setText(f"{self.temperature:.1f}{self.temp_unit}")
         self.pressure_label.setText(f"{self.pressure}hPa")
         self.humidity_label.setText(f"{self.humidity}%")
-        self.wind_label.setText(f"{self.wind_speed}km/h")
+        self.wind_label.setText(f"{self.wind_speed}{self.speed_unit}")
         self.wind_direction_label.setText(self.wind_direction)
         self.date_time_label.setText(
             f"Local date and time in {data.get("name")} : \n{local_time.strftime("%d.%m.%Y %H:%M:%S")}")
@@ -456,21 +503,3 @@ class AppWindow(QMainWindow):
             print("You don't have permission to open this file")
         except Exception as e:
             print(f"Something went wrong, error message : {e}")
-
-    def support_me(self):
-        webbrowser.open("https://www.paypal.me/szpeto")
-        self.button_click_counter("support_me")
-
-    def button_click_counter(self, button_name):
-        url = f"https://api.counterapi.dev/v1/szpeto_weather_app/{button_name}/up"
-
-        try:
-            response = requests.get(url)
-            response.raise_for_status()
-            if response.status_code == 200:
-                data = response.json()
-                print(f"The {data.get("name")} button clicked count for weather app is : {data.get("count")}")
-            else:
-                print("Cannot connect to the counter API")
-        except Exception as e:
-            print(f"Error getting the counter request : {e}")
