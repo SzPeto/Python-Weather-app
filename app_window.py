@@ -295,28 +295,33 @@ class AppWindow(QMainWindow):
                 font-size: 20px;
             }
             
+            QComboBox{
+                font-size: 20px;
+                background-color: white;
+            }
+            
         """)
 
     # Event handling and signal-slot related methods *********************************************************
     def get_weather(self):
         api_key = "f0130aa9896b42e7eec767c74fbb474b"
         city = self.text_field.text()
-        url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
-        self.button_click_counter("submit")
-
-        try:
-            response = requests.get(url)
-            response.raise_for_status()
-            data = response.json()
-            if data.get("cod") == 200:
-                data: dict
-                self.format_data(data)
-            else:
-                print(f"Network error : {response.status_code}")
-        except requests.exceptions.HTTPError as e:
-            print(f"HTTP error : {e}")
-        except requests.exceptions.RequestException as e:
-            print(f"Request error : {e}")
+        if city:
+            url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+            self.button_click_counter("submit")
+            try:
+                response = requests.get(url)
+                response.raise_for_status()
+                data = response.json()
+                if data.get("cod") == 200:
+                    data: dict
+                    self.format_data(data)
+                else:
+                    print(f"Network error : {response.status_code}")
+            except requests.exceptions.HTTPError as e:
+                print(f"HTTP error : {e}")
+            except requests.exceptions.RequestException as e:
+                print(f"Request error : {e}")
 
     def close_app(self):
         sys.exit(0)
