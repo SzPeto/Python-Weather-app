@@ -292,6 +292,7 @@ class AppWindow(QMainWindow):
         api_key = "f0130aa9896b42e7eec767c74fbb474b"
         city = self.text_field.text()
         url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+        self.button_click_counter("submit")
 
         try:
             response = requests.get(url)
@@ -458,3 +459,15 @@ class AppWindow(QMainWindow):
 
     def support_me(self):
         webbrowser.open("https://www.paypal.me/szpeto")
+        self.button_click_counter("support_me")
+
+    def button_click_counter(self, button_name):
+        url = f"https://api.counterapi.dev/v1/szpeto_weather_app/{button_name}/up"
+
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                data = response.json()
+                print(f"The {data.get("name")} button clicked count for weather app is : {data.get("count")}")
+        except Exception as e:
+            print(f"Error getting the counter request : {e}")

@@ -255,6 +255,158 @@
    'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
    'app\\.venv\\Lib\\site-packages\\certifi\\core.py',
    'PYMODULE'),
+  ('chardet',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\__init__.py',
+   'PYMODULE'),
+  ('chardet.big5freq',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\big5freq.py',
+   'PYMODULE'),
+  ('chardet.big5prober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\big5prober.py',
+   'PYMODULE'),
+  ('chardet.chardistribution',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\chardistribution.py',
+   'PYMODULE'),
+  ('chardet.charsetgroupprober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\charsetgroupprober.py',
+   'PYMODULE'),
+  ('chardet.charsetprober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\charsetprober.py',
+   'PYMODULE'),
+  ('chardet.codingstatemachine',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\codingstatemachine.py',
+   'PYMODULE'),
+  ('chardet.compat',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\compat.py',
+   'PYMODULE'),
+  ('chardet.cp949prober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\cp949prober.py',
+   'PYMODULE'),
+  ('chardet.enums',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\enums.py',
+   'PYMODULE'),
+  ('chardet.escprober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\escprober.py',
+   'PYMODULE'),
+  ('chardet.escsm',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\escsm.py',
+   'PYMODULE'),
+  ('chardet.eucjpprober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\eucjpprober.py',
+   'PYMODULE'),
+  ('chardet.euckrfreq',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\euckrfreq.py',
+   'PYMODULE'),
+  ('chardet.euckrprober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\euckrprober.py',
+   'PYMODULE'),
+  ('chardet.euctwfreq',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\euctwfreq.py',
+   'PYMODULE'),
+  ('chardet.euctwprober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\euctwprober.py',
+   'PYMODULE'),
+  ('chardet.gb2312freq',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\gb2312freq.py',
+   'PYMODULE'),
+  ('chardet.gb2312prober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\gb2312prober.py',
+   'PYMODULE'),
+  ('chardet.hebrewprober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\hebrewprober.py',
+   'PYMODULE'),
+  ('chardet.jisfreq',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\jisfreq.py',
+   'PYMODULE'),
+  ('chardet.jpcntx',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\jpcntx.py',
+   'PYMODULE'),
+  ('chardet.langbulgarianmodel',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\langbulgarianmodel.py',
+   'PYMODULE'),
+  ('chardet.langcyrillicmodel',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\langcyrillicmodel.py',
+   'PYMODULE'),
+  ('chardet.langgreekmodel',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\langgreekmodel.py',
+   'PYMODULE'),
+  ('chardet.langhebrewmodel',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\langhebrewmodel.py',
+   'PYMODULE'),
+  ('chardet.langthaimodel',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\langthaimodel.py',
+   'PYMODULE'),
+  ('chardet.langturkishmodel',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\langturkishmodel.py',
+   'PYMODULE'),
+  ('chardet.latin1prober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\latin1prober.py',
+   'PYMODULE'),
+  ('chardet.mbcharsetprober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\mbcharsetprober.py',
+   'PYMODULE'),
+  ('chardet.mbcsgroupprober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\mbcsgroupprober.py',
+   'PYMODULE'),
+  ('chardet.mbcssm',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\mbcssm.py',
+   'PYMODULE'),
+  ('chardet.sbcharsetprober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\sbcharsetprober.py',
+   'PYMODULE'),
+  ('chardet.sbcsgroupprober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\sbcsgroupprober.py',
+   'PYMODULE'),
+  ('chardet.sjisprober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\sjisprober.py',
+   'PYMODULE'),
+  ('chardet.universaldetector',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\universaldetector.py',
+   'PYMODULE'),
+  ('chardet.utf8prober',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\utf8prober.py',
+   'PYMODULE'),
+  ('chardet.version',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\chardet\\version.py',
+   'PYMODULE'),
   ('charset_normalizer',
    'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
    'app\\.venv\\Lib\\site-packages\\charset_normalizer\\__init__.py',
@@ -365,6 +517,38 @@
   ('decimal',
    'C:\\Users\\szjan\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\decimal.py',
    'PYMODULE'),
+  ('deepl',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\deepl\\__init__.py',
+   'PYMODULE'),
+  ('deepl.api_data',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\deepl\\api_data.py',
+   'PYMODULE'),
+  ('deepl.deepl_client',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\deepl\\deepl_client.py',
+   'PYMODULE'),
+  ('deepl.exceptions',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\deepl\\exceptions.py',
+   'PYMODULE'),
+  ('deepl.http_client',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\deepl\\http_client.py',
+   'PYMODULE'),
+  ('deepl.translator',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\deepl\\translator.py',
+   'PYMODULE'),
+  ('deepl.util',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\deepl\\util.py',
+   'PYMODULE'),
+  ('deepl.version',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\deepl\\version.py',
+   'PYMODULE'),
   ('difflib',
    'C:\\Users\\szjan\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\difflib.py',
    'PYMODULE'),
@@ -455,11 +639,91 @@
   ('gzip',
    'C:\\Users\\szjan\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\gzip.py',
    'PYMODULE'),
+  ('h2',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\h2\\__init__.py',
+   'PYMODULE'),
+  ('h2.config',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\h2\\config.py',
+   'PYMODULE'),
+  ('h2.connection',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\h2\\connection.py',
+   'PYMODULE'),
+  ('h2.errors',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\h2\\errors.py',
+   'PYMODULE'),
+  ('h2.events',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\h2\\events.py',
+   'PYMODULE'),
+  ('h2.exceptions',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\h2\\exceptions.py',
+   'PYMODULE'),
+  ('h2.frame_buffer',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\h2\\frame_buffer.py',
+   'PYMODULE'),
+  ('h2.settings',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\h2\\settings.py',
+   'PYMODULE'),
+  ('h2.stream',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\h2\\stream.py',
+   'PYMODULE'),
+  ('h2.utilities',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\h2\\utilities.py',
+   'PYMODULE'),
+  ('h2.windows',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\h2\\windows.py',
+   'PYMODULE'),
   ('hashlib',
    'C:\\Users\\szjan\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\hashlib.py',
    'PYMODULE'),
   ('hmac',
    'C:\\Users\\szjan\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\hmac.py',
+   'PYMODULE'),
+  ('hpack',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hpack\\__init__.py',
+   'PYMODULE'),
+  ('hpack.compat',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hpack\\compat.py',
+   'PYMODULE'),
+  ('hpack.exceptions',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hpack\\exceptions.py',
+   'PYMODULE'),
+  ('hpack.hpack',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hpack\\hpack.py',
+   'PYMODULE'),
+  ('hpack.huffman',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hpack\\huffman.py',
+   'PYMODULE'),
+  ('hpack.huffman_constants',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hpack\\huffman_constants.py',
+   'PYMODULE'),
+  ('hpack.huffman_table',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hpack\\huffman_table.py',
+   'PYMODULE'),
+  ('hpack.struct',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hpack\\struct.py',
+   'PYMODULE'),
+  ('hpack.table',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hpack\\table.py',
    'PYMODULE'),
   ('html',
    'C:\\Users\\szjan\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\html\\__init__.py',
@@ -481,6 +745,22 @@
    'PYMODULE'),
   ('http.server',
    'C:\\Users\\szjan\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\http\\server.py',
+   'PYMODULE'),
+  ('hyperframe',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hyperframe\\__init__.py',
+   'PYMODULE'),
+  ('hyperframe.exceptions',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hyperframe\\exceptions.py',
+   'PYMODULE'),
+  ('hyperframe.flags',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hyperframe\\flags.py',
+   'PYMODULE'),
+  ('hyperframe.frame',
+   'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
+   'app\\.venv\\Lib\\site-packages\\hyperframe\\frame.py',
    'PYMODULE'),
   ('idna',
    'C:\\Users\\szjan\\PycharmProjects\\Other\\Other - 11 - Weather '
