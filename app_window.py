@@ -466,8 +466,11 @@ class AppWindow(QMainWindow):
 
         try:
             response = requests.get(url)
+            response.raise_for_status()
             if response.status_code == 200:
                 data = response.json()
                 print(f"The {data.get("name")} button clicked count for weather app is : {data.get("count")}")
+            else:
+                print("Cannot connect to the counter API")
         except Exception as e:
             print(f"Error getting the counter request : {e}")
